@@ -16,6 +16,9 @@ import { detectWebGL } from './webgl'
 import { detectWindowExternal } from './window_external'
 import { detectWindowSize } from './window_size'
 import { detectDistinctiveProperties } from './distinctive_properties'
+import { detectMismatchWorkerProperties } from './worker_properties_mismatch'
+import { detectHeadless } from './headless'
+import {detectCDPRuntimeDomain} from './cdp_usage_detection'
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const detectors = {
@@ -37,4 +40,7 @@ export const detectors = {
   detectMimeTypesConsistent,
   detectProductSub,
   detectDistinctiveProperties,
+  detectMismatchWorkerProperties,
+  detectHeadless,
+  detectCDPRuntimeDomain,
 }

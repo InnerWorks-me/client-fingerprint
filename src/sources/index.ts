@@ -17,7 +17,11 @@ import getWebGL from './webgl'
 import getWindowExternal from './window_external'
 import getWindowSize, { WindowSizePayload } from './window_size'
 import checkDistinctiveProperties, { DistinctivePropertiesPayload } from './distinctive_properties'
+import getWorkerProperties from './worker_properties'
+import getPlatform from './platform'
+import queryFunctionToStringLie from './prototype_lies'
 import { getBrowserEngineKind, getBrowserKind, getDocumentFocus, isAndroid } from '../utils/browser'
+import getHeadlessFeatures from './headless/index'
 
 export const sources = {
   android: isAndroid,
@@ -43,6 +47,10 @@ export const sources = {
   functionBind: getFunctionBind,
   process: getProcess,
   distinctiveProps: checkDistinctiveProperties,
+  platform: getPlatform,
+  workerProperties: getWorkerProperties,
+  headlessFeatures: getHeadlessFeatures,
+  funtionToStringLie: queryFunctionToStringLie,
 }
 
 export { WindowSizePayload, ProcessPayload, DistinctivePropertiesPayload }

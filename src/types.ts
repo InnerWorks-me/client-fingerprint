@@ -53,6 +53,7 @@ export const BotKind = {
   WebDriver: 'webdriver',
   HeadlessChrome: 'headless_chrome',
   Unknown: 'unknown',
+  Stealth: 'stealth',
 } as const
 
 export type BotKind = typeof BotKind[keyof typeof BotKind]
@@ -117,6 +118,19 @@ export type ComponentDict<T extends AbstractSourceDict = DefaultSourceDict> = {
  *
  * @interface BotDetectorInterface
  */
+
+export type WorkerResponse = {
+  workerPlatform: string | null;
+  workerHardwareConcurrency: number | null;
+  workerDeviceMemory: number | null;
+  workerLanguage: string | null;
+  workerLanguages: string[] | null;
+  workerUserAgent: string | null;
+  workerWebglVendor: string | null;
+  workerWebglRenderer: string | null;
+  workerTimeZone: string | null;
+}
+
 export interface BotDetectorInterface {
   /**
    * Performs bot detection. Should be called after `collect()`.
