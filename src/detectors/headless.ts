@@ -1,8 +1,21 @@
-import { BotKind, ComponentDict, DetectorResponse, State } from '../types'
+import { BotKind, ComponentDict, DetectorResponse, State } from '../types';
 
-export function detectHeadless({ headlessFeatures }: ComponentDict): DetectorResponse {
+export function detectHeadless({ headlessFeatures }: ComponentDict): DetectorResponse | false {
     if (headlessFeatures.state !== State.Success) return false;
-    if (headlessFeatures.value?.stealthRating ?? 0 > 0.5) return BotKind.Stealth;
-    if (headlessFeatures.value?.likeHeadlessRating ?? 0 > 0.5) return BotKind.Unknown;
-    if (headlessFeatures.value?.headlessRating ?? 0 > 0.5) return BotKind.HeadlessChrome;
+
+    const {
+        likeHeadlessRating = 0,
+        stealthRating = 0,
+        headlessRating = 0,
+    } = headlessFeatures.value || {};
+
+    if (likeHeadlessRating > 0.5 || headlessRating > 0.5) {
+        return BotKind.Unknown;
+    }
+
+    if (stealthRating > 0.5) {
+        return BotKind.Stealth;
+    }
+
+  return false; // Explicitly return false if no conditions are met
 }

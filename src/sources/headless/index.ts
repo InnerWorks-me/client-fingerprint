@@ -4,7 +4,7 @@ import getPlatformEstimate from './getPlatformEstimate'
 import { getSystemFonts } from './getSystemFonts'
 import getWebGL from '../webgl'
 import getWorkerProperties from '../worker_properties'
-import queryFunctionToStringLie from '../prototype_lies'
+// import detectToStringLies from '../prototype_lies'
 
 export default async function getHeadlessFeatures() {
 	try {
@@ -19,8 +19,7 @@ export default async function getHeadlessFeatures() {
 			chromium: boolean,
 			likeHeadless: Record<string, boolean>,
 			headless: Record<string, boolean>,
-			stealth: Record<string, boolean>,
-			lies: Record<string, number>,
+			stealth: Record<string, boolean>,		
 		}
 		const data: Headless = {
 			chromium: IS_BLINK,
@@ -96,9 +95,6 @@ export default async function getHeadlessFeatures() {
 					!!navigator.webdriver
 				),
 			},
-			lies:{
-				functionToString: queryFunctionToStringLie(),
-			},
 			stealth: {
 				hasIframeProxy: (() => {
 					try {
@@ -138,11 +134,7 @@ export default async function getHeadlessFeatures() {
 						return err.constructor.name != 'TypeError' ? true : false
 					}
 				})(),
-				//check toString include Proxy in Math.acos.toString
-				hasMathToStringProxy: (() => {
-					const mathString = Function.prototype.call.bind(Math.acos.toString);
-					return mathString(Math.acos).includes('Proxy');
-				})(),
+				// hasToStringLies: detectToStringLies(),
 				hasBadWebGL: (() => {
 					const { UNMASKED_RENDERER_WEBGL: gpu } = webgl?.parameters || {};
 					const { workerWebglRenderer: workerGPU } = workerScope || {};
@@ -156,13 +148,10 @@ export default async function getHeadlessFeatures() {
 		const headlessKeys = Object.keys(headless)
 		const stealthKeys = Object.keys(stealth)
 
-		const likeHeadlessRating = +((likeHeadlessKeys.filter((key) => likeHeadless[key]).length / likeHeadlessKeys.length) ).toFixed(0)
-		const headlessRating = +((headlessKeys.filter((key) => headless[key]).length / headlessKeys.length) ).toFixed(0)
-		const stealthRating = +((stealthKeys.filter((key) => stealth[key]).length / stealthKeys.length)).toFixed(0)
-		console.log(data)
-		console.log(likeHeadlessRating)
-		console.log(headlessRating)
-		console.log(stealthRating)
+		const likeHeadlessRating = +((likeHeadlessKeys.filter((key) => likeHeadless[key]).length / likeHeadlessKeys.length) )
+		const headlessRating = +((headlessKeys.filter((key) => headless[key]).length / headlessKeys.length) )
+		const stealthRating = +((stealthKeys.filter((key) => stealth[key]).length / stealthKeys.length))
+
 		return {
 			...data,
 			likeHeadlessRating,
