@@ -14,7 +14,7 @@ export function detectCDPRuntimeDomain(): DetectorResponse {
     console.debug(error);
 
     if (stackAccessed) {
-      return BotKind.Unknown;
+      return BotKind.ChromeDevToolsOpen;
     }
     return false;
   } catch (e) {

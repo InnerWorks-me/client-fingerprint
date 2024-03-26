@@ -54,6 +54,7 @@ export const BotKind = {
   HeadlessChrome: 'headless_chrome',
   Unknown: 'unknown',
   Stealth: 'stealth',
+  ChromeDevToolsOpen: 'chrome_devtools_open',
 } as const
 
 export type BotKind = typeof BotKind[keyof typeof BotKind]
